@@ -15,5 +15,5 @@ import type { FormSheetProps } from './FormSheet.types';
  * @platform android, ios
  */
 export function FormSheet(props: FormSheetProps) {
-  return <SheetBase {...props} />;
+  return <SheetBase {...props} presentationStyle="formSheet" />;
 }
