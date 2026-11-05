@@ -6,13 +6,16 @@ import type {
 } from '../../shared/types';
 
 /**
- * Payload of the {@link SheetProps.onDetentChanged | onDetentChanged}
- * event.
+ * Payload of the {@link SheetProps.onDetentChanged | onDetentChanged} event.
+ *
+ * @platform android >= 21, ios >= 15
  */
 export interface SheetDetentChangedEvent {
   /**
    * Zero-based index of the detent the sheet settled at, in
    * {@link SheetProps.detents | detents}.
+   *
+   * @platform android >= 21, ios >= 15
    */
   index: number;
 }
@@ -26,6 +29,8 @@ export interface SheetDetentChangedEvent {
  *   and `1.0`, in strictly ascending order — the sheet rests at each of them.
  * - `'fitToContents'` — a single detent with the height of the sheet's
  *   content.
+ *
+ * @platform android >= 21, ios >= 15
  */
 export type SheetDetents = number[] | 'fitToContents';
 
@@ -36,6 +41,8 @@ export type SheetDetents = number[] | 'fitToContents';
  * The following values are supported:
  * - a number — the radius in density-independent pixels.
  * - `'systemDefault'` — the system's default corner radius.
+ *
+ * @platform android >= 33, ios >= 15
  */
 export type SheetPreferredCornerRadius = number | 'systemDefault';
 
@@ -48,6 +55,8 @@ export type SheetPreferredCornerRadius = number | 'systemDefault';
  *   underneath is dimmed only at the detents above it.
  * - `'none'` — the content underneath is dimmed at every detent.
  * - `'last'` — the content underneath is never dimmed.
+ *
+ * @platform ios >= 15
  */
 export type SheetLargestUndimmedDetentIndex = number | 'none' | 'last';
 
@@ -58,6 +67,8 @@ export type SheetLargestUndimmedDetentIndex = number | 'none' | 'last';
  * The following values are supported:
  * - a number — zero-based index of a detent in `detents`.
  * - `'last'` — the last, largest detent.
+ *
+ * @platform android >= 21, ios >= 15
  */
 export type SheetInitialDetentIndex = number | 'last';
 
@@ -65,33 +76,46 @@ export type SheetInitialDetentIndex = number | 'last';
  * Blur style of a {@link SheetBackgroundEffectBlur}.
  *
  * @see {@link https://developer.apple.com/documentation/uikit/uiblureffect/style | UIBlurEffect.Style}
+ * @platform ios >= 26.1
  */
 export type SheetBackgroundEffectBlurStyle = Exclude<BlurEffect, 'none'>;
 
 /**
  * Flat fill rendered behind the sheet's content.
+ *
+ * @platform ios >= 26.1
  */
 export interface SheetBackgroundEffectColor {
   /**
    * Discriminator of the effect.
+   *
+   * @platform ios >= 26.1
    */
   type: 'color';
   /**
    * Color of the fill.
+   *
+   * @platform ios >= 26.1
    */
   color: ColorValue;
 }
 
 /**
  * Blur material rendered behind the sheet's content.
+ *
+ * @platform ios >= 26.1
  */
 export interface SheetBackgroundEffectBlur {
   /**
    * Discriminator of the effect.
+   *
+   * @platform ios >= 26.1
    */
   type: 'blur';
   /**
    * Blur style of the material.
+   *
+   * @platform ios >= 26.1
    */
   style: SheetBackgroundEffectBlurStyle;
 }
@@ -106,6 +130,8 @@ export interface SheetBackgroundEffectBlur {
  *   content is drawn.
  * - {@link SheetBackgroundEffectColor} — a flat fill of the given color.
  * - {@link SheetBackgroundEffectBlur} — a blur of the given style.
+ *
+ * @platform ios >= 26.1
  */
 export type SheetBackgroundEffect =
   | 'automatic'
@@ -115,23 +141,30 @@ export type SheetBackgroundEffect =
 
 /**
  * Style of the native container hosting a sheet's content.
+ *
+ * @platform android >= 21, ios >= 15, tvos >= 26
  */
 export type SheetNativeContainerStyleProps = {
   /**
    * Specifies the background color of the native container hosting the sheet
    * content.
+   *
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   backgroundColor?: ViewStyle['backgroundColor'] | undefined;
 };
 
 /**
- * Props shared by the sheet components.
+ * Props shared by the sheet components, {@link FormSheet} and
+ * {@link PageSheet}.
+ *
+ * @platform android >= 21, ios >= 15, tvos >= 26
  */
 export interface SheetProps {
   /**
    * Content of the sheet.
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   children?: ViewProps['children'] | undefined;
 
@@ -143,7 +176,7 @@ export interface SheetProps {
    * `false` to `true` triggers the sheet to present, while changing it from
    * `true` to `false` triggers a programmatic dismissal.
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   isOpen: boolean;
 
@@ -161,7 +194,7 @@ export interface SheetProps {
    * medium and large detents are used.
    *
    * @see {@link https://developer.apple.com/documentation/uikit/uisheetpresentationcontroller/detents | UISheetPresentationController.detents}
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15
    */
   detents?: SheetDetents | undefined;
 
@@ -173,7 +206,7 @@ export interface SheetProps {
    * hint that the sheet can be resized.
    *
    * @defaultValue `false`
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15
    */
   prefersGrabberVisible?: boolean | undefined;
 
@@ -185,7 +218,7 @@ export interface SheetProps {
    * corner radius is used.
    *
    * @defaultValue `'systemDefault'`
-   * @platform android >= 33, ios
+   * @platform android >= 33, ios >= 15
    */
   preferredCornerRadius?: SheetPreferredCornerRadius | undefined;
 
@@ -193,7 +226,7 @@ export interface SheetProps {
    * The largest sheet detent for which a view underneath won't be dimmed.
    *
    * @defaultValue `'none'`
-   * @platform ios
+   * @platform ios >= 15
    */
   largestUndimmedDetentIndex?: SheetLargestUndimmedDetentIndex | undefined;
 
@@ -204,7 +237,7 @@ export interface SheetProps {
    * This prop only applies when the sheet transitions from closed to open.
    *
    * @defaultValue `0`
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15
    */
   initialDetentIndex?: SheetInitialDetentIndex | undefined;
 
@@ -221,7 +254,7 @@ export interface SheetProps {
    *
    * @defaultValue `true`
    * @see {@link https://developer.apple.com/documentation/uikit/uisheetpresentationcontroller/prefersscrollingexpandswhenscrolledtoedge | UISheetPresentationController.prefersScrollingExpandsWhenScrolledToEdge}
-   * @platform ios
+   * @platform ios >= 15
    */
   prefersScrollingExpandsWhenScrolledToEdge?: boolean | undefined;
 
@@ -235,14 +268,15 @@ export interface SheetProps {
    * the sheet via `isOpen={false}` will still work.
    *
    * @defaultValue `false`
-   * @platform android, ios
+   * @see {@link SheetProps.onNativeDismissPrevented | onNativeDismissPrevented}
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   preventNativeDismiss?: boolean | undefined;
 
   /**
    * Style applied to the native container hosting the sheet content.
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   nativeContainerStyle?: StyleProp<SheetNativeContainerStyleProps> | undefined;
 
@@ -263,18 +297,18 @@ export interface SheetProps {
   // Events
 
   /**
-   * A callback that gets invoked when the sheet will appear. This is
-   * called as soon as the transition begins.
+   * A callback that gets invoked when the sheet will appear. This is called
+   * as soon as the transition begins.
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   onWillAppear?: NativeEventHandler<EmptyEventPayload> | undefined;
 
   /**
-   * A callback that gets invoked when the sheet did appear. This is called
-   * as soon as the transition ends.
+   * A callback that gets invoked when the sheet did appear. This is called as
+   * soon as the transition ends.
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   onDidAppear?: NativeEventHandler<EmptyEventPayload> | undefined;
 
@@ -282,15 +316,15 @@ export interface SheetProps {
    * A callback that gets invoked when the sheet will disappear. This is
    * called as soon as the transition begins.
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   onWillDisappear?: NativeEventHandler<EmptyEventPayload> | undefined;
 
   /**
-   * A callback that gets invoked when the sheet did disappear. This is
-   * called as soon as the transition ends.
+   * A callback that gets invoked when the sheet did disappear. This is called
+   * as soon as the transition ends.
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   onDidDisappear?: NativeEventHandler<EmptyEventPayload> | undefined;
 
@@ -301,7 +335,7 @@ export interface SheetProps {
    * This event is fired when the sheet was dismissed via the `isOpen` prop
    * changing to `false`.
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   onDismiss?: NativeEventHandler<EmptyEventPayload> | undefined;
 
@@ -317,7 +351,7 @@ export interface SheetProps {
    * <FormSheet isOpen={isOpen} onNativeDismiss={() => setIsOpen(false)} />
    * ```
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   onNativeDismiss?: NativeEventHandler<EmptyEventPayload> | undefined;
 
@@ -334,7 +368,7 @@ export interface SheetProps {
    * them: `0` for medium and `1` for large. With fewer than two detents, the
    * index is always `0`.
    *
-   * @platform android, ios
+   * @platform android >= 21, ios >= 15
    */
   onDetentChanged?: NativeEventHandler<SheetDetentChangedEvent> | undefined;
 
@@ -347,7 +381,8 @@ export interface SheetProps {
    * useful for triggering custom feedback, such as an alert to inform the user
    * why the sheet cannot be closed.
    *
-   * @platform android, ios
+   * @see {@link SheetProps.preventNativeDismiss | preventNativeDismiss}
+   * @platform android >= 21, ios >= 15, tvos >= 26
    */
   onNativeDismissPrevented?: NativeEventHandler<EmptyEventPayload> | undefined;
 }

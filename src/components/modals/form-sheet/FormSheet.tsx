@@ -3,16 +3,15 @@ import { SheetBase } from '../sheet/SheetBase';
 import type { FormSheetProps } from './FormSheet.types';
 
 /**
- * Presents its children in a native sheet.
+ * Modal sheet presented with `UIModalPresentationFormSheet`.
  *
  * @remarks
- * The sheet is presented when {@link FormSheetProps.isOpen | isOpen} becomes
- * `true` and dismissed when it becomes `false`. It rests at the heights given
- * by {@link FormSheetProps.detents | detents}; the user can drag it between
- * them, and dismiss it natively unless
- * {@link FormSheetProps.preventNativeDismiss | preventNativeDismiss} is set.
+ * On iPhone it is a full-width sheet anchored to the bottom of the screen. On
+ * iPad it is a centered floating panel of a fixed width; the presenting screen
+ * is dimmed but not scaled back. Similar to {@link PageSheet}: the two differ
+ * only in iPad layout. On Android both present the same bottom sheet dialog.
  *
- * @platform android, ios
+ * @platform android >= 21, ios >= 15, tvos >= 26
  */
 export function FormSheet(props: FormSheetProps) {
   return <SheetBase {...props} presentationStyle="formSheet" />;
